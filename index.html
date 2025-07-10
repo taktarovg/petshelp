@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>ПомощьЖивотным - Лента</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles.css?v=1.1">
 </head>
 <body>
     <div class="app">
@@ -153,7 +156,19 @@
         </div>
     </div>
 
-    <script src="js/common.js"></script>
-    <script src="js/feed.js"></script>
+    <script src="js/common.js?v=1.1"></script>
+    <script src="js/feed.js?v=1.1"></script>
+    <script>
+        // Регистрируем Service Worker для контроля кеша
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(function(registration) {
+                    console.log('SW registered:', registration);
+                })
+                .catch(function(error) {
+                    console.log('SW registration failed:', error);
+                });
+        }
+    </script>
 </body>
 </html>
