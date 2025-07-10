@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ПомощьЖивотным - Лента</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="app">
+        <div class="header">
+            <h1>🐾 ПомощьЖивотным</h1>
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">Все</button>
+                <button class="filter-btn" data-filter="critical">Критично</button>
+                <button class="filter-btn" data-filter="urgent">Срочно</button>
+                <button class="filter-btn" data-filter="regular">Актуально</button>
+                <button class="filter-btn" data-filter="moscow">Москва</button>
+                <button class="filter-btn" data-filter="spb">СПб</button>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">127</div>
+                <div class="stat-label">Активных заявок</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">89</div>
+                <div class="stat-label">Помощь оказана</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">1.2к</div>
+                <div class="stat-label">Волонтеров</div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div id="help-feed">
+                <!-- Help cards will be inserted here -->
+            </div>
+            
+            <div class="empty-state hidden" id="empty-state">
+                <div style="font-size: 48px; margin-bottom: 16px;">🐕</div>
+                <div>Заявок по выбранным фильтрам не найдено</div>
+                <div style="margin-top: 8px; font-size: 12px;">Попробуйте изменить фильтры или создать новую заявку</div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="index.html" class="nav-item active">
+                <span class="nav-icon">📋</span>
+                <span class="nav-label">Лента</span>
+            </a>
+            <a href="favorites.html" class="nav-item">
+                <span class="nav-icon">❤️</span>
+                <span class="nav-label">Избранное</span>
+            </a>
+            <a href="catalog.html" class="nav-item">
+                <span class="nav-icon">🏢</span>
+                <span class="nav-label">Каталог</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <span class="nav-icon">👤</span>
+                <span class="nav-label">Профиль</span>
+            </a>
+        </div>
+
+        <button class="fab" onclick="openCreateModal()">+</button>
+    </div>
+
+    <!-- Create Modal -->
+    <div id="createModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="back-btn" onclick="closeCreateModal()">←</button>
+                <h2 class="modal-title">Создать заявку</h2>
+            </div>
+            <form id="helpForm">
+                <div class="form-group">
+                    <label>Фото животного</label>
+                    <div class="photo-preview" onclick="document.getElementById('photoInput').click()">
+                        <div id="photoPlaceholder">📷 Добавить фото</div>
+                        <img id="photoPreview" class="hidden" alt="Preview">
+                    </div>
+                    <input type="file" id="photoInput" accept="image/*" style="display: none;" onchange="previewPhoto(event)">
+                </div>
+                
+                <div class="form-group">
+                    <label>Заголовок*</label>
+                    <input type="text" id="title" placeholder="Кратко опишите ситуацию" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Город*</label>
+                    <select id="city" required>
+                        <option value="">Выберите город</option>
+                        <option value="moscow">Москва</option>
+                        <option value="spb">Санкт-Петербург</option>
+                        <option value="ekb">Екатеринбург</option>
+                        <option value="nsk">Новосибирск</option>
+                        <option value="other">Другой</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Срочность*</label>
+                    <select id="urgency" required>
+                        <option value="regular">Актуально</option>
+                        <option value="urgent">Срочно (до 3 дней)</option>
+                        <option value="critical">Критично (жизнь под угрозой)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Описание ситуации*</label>
+                    <textarea id="description" placeholder="Подробно опишите, какая помощь нужна животному..." required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Тип помощи</label>
+                    <select id="helpType">
+                        <option value="financial">Финансовая помощь</option>
+                        <option value="food">Корм и питание</option>
+                        <option value="medical">Ветеринарная помощь</option>
+                        <option value="transport">Транспорт</option>
+                        <option value="shelter">Временная передержка</option>
+                        <option value="adoption">Поиск дома</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Контакт для связи*</label>
+                    <input type="text" id="contact" placeholder="Телефон или Telegram" required>
+                </div>
+                
+                <button type="submit" class="btn">Опубликовать заявку</button>
+                <button type="button" class="btn btn-secondary" onclick="closeCreateModal()" style="margin-top: 8px;">Отмена</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Detail Modal -->
+    <div id="detailModal" class="modal detail-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="back-btn" onclick="closeDetailModal()">←</button>
+                <h2 class="modal-title">Детали заявки</h2>
+            </div>
+            <div id="detailContent">
+                <!-- Detail content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/feed.js"></script>
+</body>
+</html>

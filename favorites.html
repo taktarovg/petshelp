@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ПомощьЖивотным - Избранное</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="app">
+        <div class="header">
+            <h1>❤️ Избранное</h1>
+        </div>
+
+        <div class="content">
+            <div id="favorites-list">
+                <!-- Favorite items will be inserted here -->
+            </div>
+            
+            <div class="empty-state" id="empty-favorites" style="display: none;">
+                <div style="font-size: 48px; margin-bottom: 16px;">💜</div>
+                <div>Пока нет избранных заявок</div>
+                <div style="margin-top: 8px; font-size: 12px;">Добавляйте в избранное интересные заявки, чтобы не потерять их</div>
+                <div style="margin-top: 16px;">
+                    <a href="index.html" class="btn">Посмотреть заявки</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="index.html" class="nav-item">
+                <span class="nav-icon">📋</span>
+                <span class="nav-label">Лента</span>
+            </a>
+            <a href="favorites.html" class="nav-item active">
+                <span class="nav-icon">❤️</span>
+                <span class="nav-label">Избранное</span>
+            </a>
+            <a href="catalog.html" class="nav-item">
+                <span class="nav-icon">🏢</span>
+                <span class="nav-label">Каталог</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <span class="nav-icon">👤</span>
+                <span class="nav-label">Профиль</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Detail Modal -->
+    <div id="detailModal" class="modal detail-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="back-btn" onclick="closeDetailModal()">←</button>
+                <h2 class="modal-title">Детали заявки</h2>
+            </div>
+            <div id="detailContent">
+                <!-- Detail content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script>
+        // Favorites page specific functionality
+        function renderFavorites() {
+            const favoritesList = document.getElementById('favorites-list');
+            const emptyState = document.getElementById('empty-favorites');
+            const favoriteRequests = getFavoriteRequests();
+            
+            if (favoriteRequests.length === 0) {
+                favoritesList.innerHTML = '';
+                emptyState.style.display = 'block';
+                return;
+            }
+            
+            emptyState.style.display = 'none';
+            
+            favoritesList.innerHTML = favoriteRequests.map(request => `
+                <div class="favorite-item">
+                    <div class="card-image">
+                        ${request.image && !request.image.includes('data:image/svg') ? 
+                            `<img src="${request.image}" alt="Фото">` : 
+                            getAnimalEmoji(request.helpType)}
+                    </div>
+                    <div class="favorite-content" onclick="openDetailModal(${request.id})">
+                        <div class="favorite-title">${request.title}</div>
+                        <div class="favorite-meta">
+                            📍 ${getCityText(request.city)} • ${getHelpTypeText(request.helpType)} • ${request.time}
+                        </div>
+                        <div style="margin-top: 4px; font-size: 12px; color: var(--tg-theme-hint-color);">
+                            ${request.description.substring(0, 80)}${request.description.length > 80 ? '...' : ''}
+                        </div>
+                    </div>
+                    <button class="remove-favorite" onclick="removeFavorite(${request.id})" title="Убрать из избранного">
+                        ×
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function removeFavorite(id) {
+            toggleFavorite(id);
+            renderFavorites();
+            alert('Заявка удалена из избранного');
+        }
+
+        function openDetailModal(id) {
+            const request = helpRequests.find(req => req.id === id);
+            if (!request) return;
+            
+            const modal = document.getElementById('detailModal');
+            const content = document.getElementById('detailContent');
+            
+            content.innerHTML = `
+                ${request.image && !request.image.includes('data:image/svg') ? 
+                    `<img src="${request.image}" alt="Фото" class="detail-image">` : 
+                    `<div style="height: 200px; background: var(--tg-theme-secondary-bg-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 64px; margin-bottom: 16px;">
+                        ${getAnimalEmoji(request.helpType)}
+                    </div>`
+                }
+                <div class="detail-urgency ${request.urgency}">${getUrgencyText(request.urgency)}</div>
+                <h3>${request.title}</h3>
+                <div style="margin: 12px 0; color: var(--tg-theme-hint-color); font-size: 14px;">
+                    📍 ${getCityText(request.city)} • ${getHelpTypeText(request.helpType)} • ${request.time}
+                </div>
+                <div style="margin: 16px 0; line-height: 1.4;">
+                    ${request.description}
+                </div>
+                <div style="margin: 16px 0; padding: 12px; background: var(--tg-theme-secondary-bg-color); border-radius: 8px;">
+                    <strong>Контакт:</strong> ${request.contact}<br>
+                    <strong>Автор:</strong> ${request.author}
+                </div>
+                <div class="detail-actions">
+                    <button class="btn" onclick="contactHelper('${request.contact}')">Связаться</button>
+                    <div style="display: flex; gap: 8px; margin-top: 12px;">
+                        <button class="btn btn-secondary" onclick="toggleFavoriteFromModal(${id})" style="flex: 1;">
+                            💔 Убрать из избранного
+                        </button>
+                    </div>
+                    <div class="share-buttons">
+                        <button class="share-btn" onclick="shareToStory(${id})">📱 В сторис</button>
+                        <button class="share-btn" onclick="shareToChat(${id})">💬 В чат</button>
+                        <button class="share-btn" onclick="copyLink(${id})">🔗 Ссылка</button>
+                    </div>
+                </div>
+            `;
+            
+            modal.style.display = 'block';
+        }
+
+        function closeDetailModal() {
+            document.getElementById('detailModal').style.display = 'none';
+        }
+
+        function toggleFavoriteFromModal(id) {
+            toggleFavorite(id);
+            closeDetailModal();
+            renderFavorites();
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            renderFavorites();
+
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                const detailModal = document.getElementById('detailModal');
+                if (event.target === detailModal) {
+                    closeDetailModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ПомощьЖивотным - Каталог</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="app">
+        <div class="header">
+            <h1>🏢 Каталог помощи</h1>
+            <div class="category-filters">
+                <button class="category-btn active" data-category="all">Все</button>
+                <button class="category-btn" data-category="vet">Ветклиники</button>
+                <button class="category-btn" data-category="shelter">Приюты</button>
+                <button class="category-btn" data-category="shop">Зоомагазины</button>
+                <button class="category-btn" data-category="volunteer">Волонтеры</button>
+            </div>
+        </div>
+
+        <div class="content">
+            <div id="companies-list">
+                <!-- Companies will be inserted here -->
+            </div>
+            
+            <div class="empty-state" id="empty-companies" style="display: none;">
+                <div style="font-size: 48px; margin-bottom: 16px;">🏢</div>
+                <div>Компаний в выбранной категории не найдено</div>
+                <div style="margin-top: 8px; font-size: 12px;">Попробуйте выбрать другую категорию</div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="index.html" class="nav-item">
+                <span class="nav-icon">📋</span>
+                <span class="nav-label">Лента</span>
+            </a>
+            <a href="favorites.html" class="nav-item">
+                <span class="nav-icon">❤️</span>
+                <span class="nav-label">Избранное</span>
+            </a>
+            <a href="catalog.html" class="nav-item active">
+                <span class="nav-icon">🏢</span>
+                <span class="nav-label">Каталог</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <span class="nav-icon">👤</span>
+                <span class="nav-label">Профиль</span>
+            </a>
+        </div>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/catalog.js"></script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ПомощьЖивотным - Профиль</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="app">
+        <div class="header">
+            <h1>👤 Профиль</h1>
+        </div>
+
+        <div class="content">
+            <div class="profile-card">
+                <div class="profile-avatar">🐾</div>
+                <div class="profile-name" id="profileName">Пользователь</div>
+                <div style="color: var(--tg-theme-hint-color); font-size: 14px;">Волонтер</div>
+                
+                <div class="profile-stats">
+                    <div class="profile-stat">
+                        <div class="profile-stat-number">12</div>
+                        <div class="profile-stat-label">Помощь оказана</div>
+                    </div>
+                    <div class="profile-stat">
+                        <div class="profile-stat-number">5</div>
+                        <div class="profile-stat-label">Заявок создано</div>
+                    </div>
+                    <div class="profile-stat">
+                        <div class="profile-stat-number">4.8</div>
+                        <div class="profile-stat-label">Рейтинг</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-list">
+                <div class="menu-item" onclick="showComingSoon('Мои заявки')">
+                    <div class="menu-icon">📝</div>
+                    <div class="menu-text">Мои заявки</div>
+                    <div class="menu-arrow">›</div>
+                </div>
+                <div class="menu-item" onclick="showComingSoon('История помощи')">
+                    <div class="menu-icon">💰</div>
+                    <div class="menu-text">История помощи</div>
+                    <div class="menu-arrow">›</div>
+                </div>
+                <div class="menu-item" onclick="showComingSoon('Достижения')">
+                    <div class="menu-icon">🎖️</div>
+                    <div class="menu-text">Достижения</div>
+                    <div class="menu-arrow">›</div>
+                </div>
+                <div class="menu-item" onclick="showComingSoon('Настройки')">
+                    <div class="menu-icon">⚙️</div>
+                    <div class="menu-text">Настройки</div>
+                    <div class="menu-arrow">›</div>
+                </div>
+                <div class="menu-item" onclick="showSupport()">
+                    <div class="menu-icon">📞</div>
+                    <div class="menu-text">Поддержка</div>
+                    <div class="menu-arrow">›</div>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px; padding: 16px; background: var(--tg-theme-secondary-bg-color); border-radius: 12px;">
+                <h3 style="margin-bottom: 12px; font-size: 16px;">О приложении</h3>
+                <div style="font-size: 14px; line-height: 1.4; color: var(--tg-theme-hint-color);">
+                    ПомощьЖивотным — это платформа для координации помощи бездомным животным. 
+                    Здесь волонтеры, приюты и неравнодушные люди могут найти друг друга и вместе спасать жизни.
+                </div>
+                <div style="margin-top: 12px; font-size: 12px; color: var(--tg-theme-hint-color);">
+                    Версия: 1.0.0 (Beta)
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="index.html" class="nav-item">
+                <span class="nav-icon">📋</span>
+                <span class="nav-label">Лента</span>
+            </a>
+            <a href="favorites.html" class="nav-item">
+                <span class="nav-icon">❤️</span>
+                <span class="nav-label">Избранное</span>
+            </a>
+            <a href="catalog.html" class="nav-item">
+                <span class="nav-icon">🏢</span>
+                <span class="nav-label">Каталог</span>
+            </a>
+            <a href="profile.html" class="nav-item active">
+                <span class="nav-icon">👤</span>
+                <span class="nav-label">Профиль</span>
+            </a>
+        </div>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/profile.js"></script>
+</body>
+</html>
