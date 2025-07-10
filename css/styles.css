@@ -698,6 +698,223 @@ body {
     color: var(--tg-theme-hint-color);
 }
 
+/* Company Profile Modal */
+.company-profile-modal .modal-content {
+    margin: 0;
+    border-radius: 0;
+    height: 100vh;
+    max-height: none;
+    background: var(--tg-theme-bg-color);
+    overflow-y: auto;
+}
+
+.company-profile-header {
+    background: linear-gradient(135deg, var(--tg-theme-button-color), #1976d2);
+    color: var(--tg-theme-button-text-color);
+    padding: 20px;
+    text-align: center;
+    position: relative;
+}
+
+.company-profile-avatar {
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    margin: 0 auto 16px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+}
+
+.company-profile-name {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.company-profile-category {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-bottom: 12px;
+}
+
+.company-profile-rating {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 16px;
+}
+
+.company-profile-content {
+    padding: 20px;
+}
+
+.profile-section {
+    margin-bottom: 24px;
+}
+
+.profile-section-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--tg-theme-text-color);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.profile-section-content {
+    line-height: 1.5;
+    color: var(--tg-theme-text-color);
+}
+
+.contact-grid {
+    display: grid;
+    gap: 12px;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: var(--tg-theme-secondary-bg-color);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.contact-item:hover {
+    transform: translateY(-1px);
+}
+
+.contact-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--tg-theme-button-color);
+    color: var(--tg-theme-button-text-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.contact-info {
+    flex: 1;
+}
+
+.contact-label {
+    font-size: 12px;
+    color: var(--tg-theme-hint-color);
+    margin-bottom: 2px;
+}
+
+.contact-value {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 8px;
+}
+
+.service-item {
+    background: var(--tg-theme-secondary-bg-color);
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 12px;
+    border: 1px solid transparent;
+}
+
+.achievements-list {
+    display: grid;
+    gap: 8px;
+}
+
+.achievement-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: var(--tg-theme-secondary-bg-color);
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+.achievement-item::before {
+    content: "🏆";
+    font-size: 16px;
+}
+
+.photos-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 8px;
+}
+
+.photo-item {
+    aspect-ratio: 1;
+    background: var(--tg-theme-secondary-bg-color);
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+}
+
+.photo-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.company-actions {
+    position: sticky;
+    bottom: 0;
+    background: var(--tg-theme-bg-color);
+    padding: 16px 20px;
+    border-top: 1px solid var(--tg-theme-secondary-bg-color);
+    display: flex;
+    gap: 12px;
+}
+
+.company-action-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.company-action-btn.primary {
+    background: var(--tg-theme-button-color);
+    color: var(--tg-theme-button-text-color);
+}
+
+.company-action-btn.secondary {
+    background: var(--tg-theme-secondary-bg-color);
+    color: var(--tg-theme-text-color);
+    border: 1px solid var(--tg-theme-button-color);
+}
+
+.company-action-btn:hover {
+    transform: translateY(-1px);
+    opacity: 0.9;
+}
+
 .remove-favorite {
     background: none;
     border: none;
