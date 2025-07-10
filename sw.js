@@ -1,5 +1,5 @@
 // Service Worker для контроля кеша
-const CACHE_NAME = 'petshelp-v1.1';
+const CACHE_NAME = 'petshelp-v1.2';
 const urlsToCache = [
     '/',
     '/index.html',

@@ -118,9 +118,18 @@ function openDetailModal(id) {
                 </button>
             </div>
             <div class="share-buttons">
-                <button class="share-btn" onclick="shareToStory(${id})">📱 В сторис</button>
-                <button class="share-btn" onclick="shareToChat(${id})">💬 В чат</button>
-                <button class="share-btn" onclick="copyLink(${id})">🔗 Ссылка</button>
+                <button class="share-btn primary" onclick="shareToChat(${id})">
+                    <span>💬</span>
+                    <span>В чат</span>
+                </button>
+                <button class="share-btn" onclick="shareToStory(${id})">
+                    <span>📱</span>
+                    <span>В сторис</span>
+                </button>
+                <button class="share-btn" onclick="copyLink(${id})">
+                    <span>🔗</span>
+                    <span>Ссылка</span>
+                </button>
             </div>
         </div>
     `;

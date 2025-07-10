@@ -274,17 +274,83 @@ function shareToStory(id) {
 
 function shareToChat(id) {
     const request = helpRequests.find(req => req.id === id);
-    const text = `🐾 ${request.title}\n\n${request.description.substring(0, 100)}...\n\n📍 ${getCityText(request.city)}\n💬 ${request.contact}`;
-    
-    if (tg) {
-        tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(text)}`);
-    } else {
-        navigator.clipboard.writeText(text).then(() => {
-            alert('Текст скопирован в буфер обмена');
-        }).catch(() => {
-            alert('Не удалось скопировать текст');
-        });
+    if (!request) {
+        alert('Заявка не найдена');
+        return;
     }
+    
+    // Формируем текст для отправки
+    const shareText = `🐾 ${request.title}\n\n${request.description.substring(0, 150)}${request.description.length > 150 ? '...' : ''}\n\n📍 ${getCityText(request.city)}\n🏥 ${getHelpTypeText(request.helpType)}\n⏰ ${request.time}\n\n💬 Контакт: ${request.contact}\n👤 Автор: ${request.author}\n\n🔗 Подробнее: ${window.location.origin}${window.location.pathname}?request=${id}`;
+    
+    if (tg && tg.switchInlineQuery) {
+        // Метод 1: Используем switchInlineQuery для отправки через inline-режим
+        try {
+            tg.switchInlineQuery(shareText, ['users', 'groups']);
+        } catch (e) {
+            console.warn('switchInlineQuery failed:', e);
+            fallbackShare(shareText);
+        }
+    } else if (tg && tg.openTelegramLink) {
+        // Метод 2: Открываем Telegram с предзаполненным текстом
+        const encodedText = encodeURIComponent(shareText);
+        try {
+            tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodedText}`);
+        } catch (e) {
+            console.warn('openTelegramLink failed:', e);
+            fallbackShare(shareText);
+        }
+    } else {
+        // Метод 3: Fallback для обычных браузеров
+        fallbackShare(shareText);
+    }
+}
+
+// Fallback функция для случаев, когда Telegram API недоступен
+function fallbackShare(text) {
+    if (navigator.share) {
+        // Используем Web Share API если доступен
+        navigator.share({
+            title: 'Помощь животному',
+            text: text,
+            url: window.location.href
+        }).catch(err => {
+            console.log('Share failed:', err);
+            copyToClipboard(text);
+        });
+    } else {
+        // Копируем в буфер обмена
+        copyToClipboard(text);
+    }
+}
+
+// Функция копирования в буфер обмена
+function copyToClipboard(text) {
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => {
+            alert('📋 Информация скопирована в буфер обмена!\n\nТеперь вы можете вставить её в любой чат.');
+        }).catch(() => {
+            textAreaFallback(text);
+        });
+    } else {
+        textAreaFallback(text);
+    }
+}
+
+// Fallback через textarea для старых браузеров
+function textAreaFallback(text) {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed';
+    textArea.style.opacity = '0';
+    document.body.appendChild(textArea);
+    textArea.select();
+    try {
+        document.execCommand('copy');
+        alert('📋 Информация скопирована в буфер обмена!\n\nТеперь вы можете вставить её в любой чат.');
+    } catch (err) {
+        alert('❌ Не удалось скопировать. Попробуйте выделить текст вручную.');
+    }
+    document.body.removeChild(textArea);
 }
 
 function copyLink(id) {

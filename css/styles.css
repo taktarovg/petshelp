@@ -306,13 +306,35 @@ body {
 
 .share-btn {
     flex: 1;
-    padding: 8px;
+    padding: 10px 8px;
     border: 1px solid var(--tg-theme-button-color);
     background: transparent;
     color: var(--tg-theme-button-color);
-    border-radius: 6px;
+    border-radius: 8px;
     font-size: 12px;
     cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.share-btn:hover {
+    background: var(--tg-theme-button-color);
+    color: var(--tg-theme-button-text-color);
+    transform: translateY(-1px);
+}
+
+.share-btn.primary {
+    background: var(--tg-theme-button-color);
+    color: var(--tg-theme-button-text-color);
+    font-weight: 500;
+}
+
+.share-btn.primary:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
 }
 
 .photo-preview {
