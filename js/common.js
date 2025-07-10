@@ -312,3 +312,19 @@ function copyLink(id) {
         document.body.removeChild(textArea);
     }
 }
+
+// Global function to open create modal (redirect to index if not on index page)
+function openCreateModal() {
+    if (window.location.pathname.includes('index.html') || window.location.pathname === '/') {
+        // We're on the index page, try to open modal
+        const modal = document.getElementById('createModal');
+        if (modal) {
+            modal.style.display = 'block';
+        } else {
+            console.warn('Create modal not found on this page');
+        }
+    } else {
+        // Redirect to index page
+        window.location.href = 'index.html';
+    }
+}
